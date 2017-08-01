@@ -1,0 +1,3 @@
+NameError: uninitialized constant DockingStation
+	from (irb):1
+	from /Users/alessiobortone/.rvm/rubies/ruby-2.4.0/bin/irb:11:in `<main>'
