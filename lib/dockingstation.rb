@@ -5,15 +5,25 @@ class DockingStation
   end
 
   def release_bike
-    raise "no bikes available" if @bikes.empty?
+    raise "no bikes available" if empty?
     @bikes
   end
 
 attr_reader :bike
 
   def dock(bike)
-    raise "the dock is full" if @bikes.count >= 20
+    raise "the dock is full" if full?
     @bikes << bike
+  end
+
+private
+
+  def full?
+    @bikes.count >= 20
+  end
+
+  def empty?
+    @bikes.empty?
   end
 
 end
