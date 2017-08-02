@@ -13,6 +13,12 @@ it 'raises error when more than one bike is docked' do
   bike1=Bike.new
   expect{station.dock(bike1)}.to raise_error("the dock is full")
 end
+
+it 'sets default capacity' do
+  station = DockingStation.new
+  expect(station.capacity).to eq(20)
+end
+
 end
 
 =begin
