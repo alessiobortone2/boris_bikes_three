@@ -2,12 +2,12 @@ require 'dockingstation'
 
 describe DockingStation do
 
-it 'raises error when more than one bike is created' do
+it 'raises error when no docked bike' do
   station = DockingStation.new
   expect{station.release_bike}.to raise_error("no bikes available")
 end
 
-it 'raises error when more than one bike is docked' do
+it 'raises error when more than the capacity is docked' do
   station = DockingStation.new
   DockingStation::DEFAULT_CAPACITY.times {station.dock(Bike.new)}
   bike1=Bike.new
@@ -19,6 +19,28 @@ it 'sets default capacity' do
   expect(station.capacity).to eq(20)
 end
 
+it 'sees unbroken bikes' do
+  station1 = DockingStation.new
+  bike1=Bike.new
+  station1.dock(bike1, false)
+  expect(station1.bikes).to include bike1
+end
+
+it 'does not allow docking station to release broken bikes' do
+  station1 = DockingStation.new
+  bike1=Bike.new
+  bike2=Bike.new
+  station1.dock(bike1, true)
+  station1.dock(bike2, false)
+  station1.release_bike == bike2
+end
+
+it 'can report broken bikes' do
+  station1 = DockingStation.new
+  bike1=Bike.new
+  station1.dock(bike1, true)
+  expect(station1.broken).to include bike1
+end
 end
 
 =begin
