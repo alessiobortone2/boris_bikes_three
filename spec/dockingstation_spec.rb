@@ -9,7 +9,7 @@ end
 
 it 'raises error when more than one bike is docked' do
   station = DockingStation.new
-  20.times {station.dock(Bike.new)}
+  DockingStation::DEFAULT_CAPACITY.times {station.dock(Bike.new)}
   bike1=Bike.new
   expect{station.dock(bike1)}.to raise_error("the dock is full")
 end
