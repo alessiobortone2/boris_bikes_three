@@ -1,7 +1,7 @@
 require 'dockingstation'
 
 describe DockingStation do
-  let(:bike) { double :bike }
+  #let(:bike) { double :bike }
 
   it 'raises error when no docked bike' do
     station = DockingStation.new
@@ -9,8 +9,9 @@ describe DockingStation do
   end
 
   it 'raises error when more than the capacity is docked' do
-    allow(bike).to receive(:working?).and_return(true)
-    allow(bike).to receive(:broken).and_return(false)
+    #allow(double :bike).to receive(:working?).and_return(true)
+    #allow(bike).to receive(:broken).and_return(false)
+    bike = double("bike", :broken => false, :working? => true)
     station = DockingStation.new
     DockingStation::DEFAULT_CAPACITY.times {station.dock(bike)}
     bike1=bike
@@ -23,8 +24,7 @@ describe DockingStation do
   end
 
   it 'sees unbroken bikes' do
-    allow(bike).to receive(:working?).and_return(true)
-    allow(bike).to receive(:broken).and_return(false)
+    bike = double("bike", :broken => false, :working? => true)
     station1 = DockingStation.new
     bike1=bike
     station1.dock(bike1, false)
@@ -32,8 +32,7 @@ describe DockingStation do
   end
 
   it 'does not allow docking station to release broken bikes' do
-    allow(bike).to receive(:working?).and_return(false)
-    allow(bike).to receive(:broken).and_return(false)
+    bike = double("bike", :broken => false, :working? => false)
     station1 = DockingStation.new
     bike1=bike
     station1.dock(bike1, true)
@@ -41,8 +40,7 @@ describe DockingStation do
   end
 
   it 'can report broken bikes' do
-    allow(bike).to receive(:working?).and_return(false)
-    allow(bike).to receive(:broken).and_return(false)
+    bike = double("bike", :broken => false, :working? => false)
     station1 = DockingStation.new
     bike1=bike
     station1.dock(bike1, true)
