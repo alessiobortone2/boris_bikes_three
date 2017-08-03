@@ -4,7 +4,7 @@ DEFAULT_CAPACITY = 20
 
   def initialize(capacity = DEFAULT_CAPACITY)
     @bikes = []
-    @broken = []
+    @brokenbikes = []
     @capacity = capacity
   end
 
@@ -13,12 +13,13 @@ DEFAULT_CAPACITY = 20
     @bikes.pop
   end
 
-attr_reader :bikes, :capacity, :broken
+attr_reader :bikes, :capacity, :brokenbikes
 
 
-  def dock(bike, broke=false)
+  def dock(anybike, brokenstatus=false)
     raise "the dock is full" if full?
-    broke ? @broken << bike : @bikes << bike
+    anybike.broken if brokenstatus
+    anybike.working? ? @bikes << anybike : @brokenbikes << anybike 
   end
 
 private
@@ -34,8 +35,17 @@ private
 end
 
 class Bike
+
+  def initialize(working=true)
+    @working=working
+  end
+
   def working?
-    true
+    @working
+  end
+
+  def broken
+    @working=false
   end
 end
 
