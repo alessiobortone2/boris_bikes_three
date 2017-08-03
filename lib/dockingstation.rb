@@ -13,13 +13,13 @@ DEFAULT_CAPACITY = 20
     @bikes.pop
   end
 
-attr_reader :bikes, :capacity, :brokenbikes
+attr_accessor :bikes, :capacity, :brokenbikes
 
 
   def dock(anybike, brokenstatus=false)
     raise "the dock is full" if full?
     anybike.broken if brokenstatus
-    anybike.working? ? @bikes << anybike : @brokenbikes << anybike 
+    anybike.working? ? @bikes << anybike : @brokenbikes << anybike
   end
 
 private
@@ -46,6 +46,53 @@ class Bike
 
   def broken
     @working=false
+  end
+end
+
+class Van
+  attr_accessor :van_storage
+
+  def initialize
+    @van_storage=[]
+  end
+
+  def to_van(*bikes)
+    @van_storage << bikes
+    @van_storage.flatten!
+  end
+
+  def to_garage(garage)
+    garage.unfixed = @van_storage
+  end
+
+  def to_station(station)
+    station.bikes = @van_storage
+  end
+
+
+end
+
+class Garage
+
+  attr_reader :unfixed, :fixed
+
+  def initialize
+    @fixed=[]
+    @unfixed=[]
+  end
+
+  def fix_bikes
+    @fixed << @unfixed
+    @fixed.flatten!
+  end
+
+  def back_to_van(van)
+    van.van_storage = @fixed
+  end
+
+  def unfixed=(*bikes)
+    @unfixed << bikes
+    @unfixed.flatten!
   end
 end
 
